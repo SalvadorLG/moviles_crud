@@ -39,4 +39,25 @@ public class AppPresenter implements AppInterface.Presenter{
             view.showMsgExitoso(msg, token);
         }
     }
+
+    @Override
+    public void EditarProducts(String nombre_producto, String precio_producto, String code_prodcuto, String cant_prodcuto, String token, String puntero) {
+        if (view!=null){
+            model.EditarProducts(nombre_producto, precio_producto, code_prodcuto, cant_prodcuto, token, puntero);
+        }
+    }
+
+    @Override
+    public void deleteProduct(String token, String puntero) {
+        if (view!= null){
+            model.deleteProduct(token, puntero);
+        }
+    }
+
+    @Override
+    public void refresecar(String msg, String token) {
+        if (view!= null){
+            view.refresecar(msg, token);
+        }
+    }
 }

@@ -6,6 +6,7 @@ public interface AppInterface {
     interface View{
         void showProducts(JSONArray array);
         void showMsgExitoso(String msg, String token);
+        void refresecar(String msg, String token);
     }
 
     interface Presenter {
@@ -13,10 +14,15 @@ public interface AppInterface {
         void showProducts(JSONArray array);
         void addProducts(String nombreproducto, String precioproducto, String codeprodcuto, String cantprodcuto, String token);
         void showMsgExitoso(String msg, String token);
+        void EditarProducts(String nombreproducto, String precioproducto, String codeprodcuto, String cantprodcuto, String token, String puntero);
+        void deleteProduct(String token, String puntero);
+        void refresecar(String msg, String token);
     }
 
     interface Model {
         void getProducts(String token);
         void addProducts(String nombreproducto, String precioproducto, String codeprodcuto, String cantprodcuto, String token);
+        void EditarProducts(String nombreproducto, String precioproducto, String codeprodcuto, String cantprodcuto, String token, String puntero);
+        void deleteProduct(String token, String puntero);
     }
 }

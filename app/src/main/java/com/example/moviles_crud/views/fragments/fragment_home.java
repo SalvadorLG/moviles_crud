@@ -44,6 +44,7 @@ public class fragment_home extends Fragment {
     private TableLayout table_product;
     private OnFragmentInteractionListener mListener;
     private FragmentHomeInterface listener_home;
+    private String Token;
     public fragment_home() {
         // Required empty public constructor
     }
@@ -51,6 +52,8 @@ public class fragment_home extends Fragment {
     public interface FragmentHomeInterface{
         void callProducts(String token);
         void addProducts(String token);
+        void editProducts(String token,String puntero);
+        void deletethis(String token,String puntero);
     }
 
     /**
@@ -88,14 +91,14 @@ public class fragment_home extends Fragment {
         add_product = (Button) v.findViewById(R.id.btn_add_product);
         table_product = (TableLayout) v.findViewById(R.id.id_table_product);
         Bundle bundle = getArguments();
-        final String token = bundle.getString("token");
-        listener_home.callProducts(token);
+        Token = bundle.getString("token");
+        listener_home.callProducts(Token);
 
         add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("fragment_home: "+token);
-                listener_home.addProducts(token);
+                System.out.println("fragment_home: "+Token);
+                listener_home.addProducts(Token);
 
             }
         });
@@ -105,15 +108,18 @@ public class fragment_home extends Fragment {
         return v;
     }
 
+    public void recargar(){}
+
     public void msgSuccessful(String msg){
         System.out.println("msgSuccessful"+msg);
+        //Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
 
     }
 
     public void showListProducts(JSONArray array){
-        String s = array.toString();
+        //String s = array.toString();
 
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
         for(int i = 0; i < array.length(); ++i) {
             try {
                 JSONObject jobj = array.getJSONObject(i);
@@ -137,7 +143,7 @@ public class fragment_home extends Fragment {
                     public void onClick(View v) {
                         System.out.println("v.getid is:- " + v.getId());
                         String puntero = String.valueOf(v.getId());
-                        //UpdateJuego(puntero);
+                        listener_home.editProducts(Token, puntero);
                     }
                 });
                 row.addView(edit);
@@ -150,7 +156,7 @@ public class fragment_home extends Fragment {
                     public void onClick(View v) {
                         System.out.println("v.getid is:- " + v.getId());
                         String puntero = String.valueOf(v.getId());
-                        //DeleteJuego(puntero);
+                        listener_home.deletethis(Token, puntero);
                     }
                 });
                 row.addView(delete);

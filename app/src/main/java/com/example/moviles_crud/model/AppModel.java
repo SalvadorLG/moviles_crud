@@ -69,8 +69,57 @@ public class AppModel implements AppInterface.Model {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 if(statusCode == 201){
                     System.out.println("addproduct 201: "+token);
-                    String t = "EL producto ha sido agregado exitosamente";
+                    String t = "EL producto ha sido eliminado exitosamente";
                     presenter.showMsgExitoso(t, token);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void EditarProducts(String nombre_producto, String precio_producto, String code_prodcuto, String cant_prodcuto,final String token, String puntero) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Authorization", "Token " + token);
+        System.out.println("addproduct: "+token);
+        RequestParams params = new RequestParams();
+        params.put("producto",nombre_producto);
+        params.put("precio",precio_producto);
+        params.put("cantidadTotal",cant_prodcuto);
+        params.put("codigo",code_prodcuto);
+
+        client.put(URL + puntero + "/", params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if(statusCode == 200) {
+                    String t = "EL producto ha sido actualizado exitosamente";
+                    presenter.showMsgExitoso(t, token);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void deleteProduct(final String token, String puntero) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Authorization", "Token " + token);
+        System.out.println("addproduct: "+token);
+        RequestParams params = new RequestParams();
+        client.delete(URL + puntero + "/", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                if(statusCode == 204) {
+                    String t = "EL producto ha sido actualizado exitosamente";
+                    presenter.refresecar(t, token);
                 }
             }
 
